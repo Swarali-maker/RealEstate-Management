@@ -1,5 +1,6 @@
 package com.spring.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,8 @@ public class UserServices {
     private UserRepository userRepository;
 
     public User saveUser(User user) {
+    	user.setCreatedAt(LocalDateTime.now());
+    	
         return userRepository.save(user);
     }
 

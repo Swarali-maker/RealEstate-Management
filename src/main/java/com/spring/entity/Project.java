@@ -3,6 +3,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,7 +24,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="leads")
+@Table(name="projects")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -77,8 +79,10 @@ public class Project {
 	private LocalDateTime updatedAt;
 	
 	@OneToMany(mappedBy="project")
+	@JsonIgnore
 	private List<Property> property;
 	
 	@OneToMany(mappedBy="project")
+	@JsonIgnore
 	private List<Lead> lead;
 }

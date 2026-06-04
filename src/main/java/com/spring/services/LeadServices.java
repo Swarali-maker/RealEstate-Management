@@ -1,5 +1,6 @@
 package com.spring.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ public class LeadServices {
 
 
 	public Lead createLead(Lead lead) {
+		lead.setCreatedAt(LocalDateTime.now());
         return leadRepository.save(lead);
     }
 

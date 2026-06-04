@@ -1,5 +1,6 @@
 package com.spring.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class PropertyServices {
 
 
     public Property createProperty(Property property) {
+    	property.setCreatedAt(LocalDateTime.now());
         return propertyRepository.save(property);
     }
 

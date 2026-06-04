@@ -1,5 +1,6 @@
 package com.spring.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ public class RegionServices {
     private RegionRepository regionRepository;
 
     public Region save(Region region) {
+    	region.setCreatedAt(LocalDateTime.now());
         return regionRepository.save(region);
     }
 

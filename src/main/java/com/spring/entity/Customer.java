@@ -2,6 +2,8 @@ package com.spring.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,14 +32,15 @@ public class Customer {
 	private long customerId;
 	
 	@Column(name="customer_name", nullable=false)
-	private String name;
+	private String customerName;
 	
 	@Column(name="customer_phone", nullable=false)
-	private long phone;
+	private long customerPhone;
 	
 	@Column(name="customer_email")
-	private String email;
+	private String customerEmail;
 	
 	@OneToMany(mappedBy="customer")
+	@JsonIgnore
 	private List<Lead> leads;
 }

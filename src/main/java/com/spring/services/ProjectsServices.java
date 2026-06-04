@@ -1,5 +1,6 @@
 package com.spring.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class ProjectsServices {
 	    private ProjectRepository projectRepository;
 
 	    public Project createProject(Project project) {
+	    	project.setCreatedAt(LocalDateTime.now());
 	        return projectRepository.save(project);
 	    }
 
