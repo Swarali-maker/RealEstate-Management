@@ -1,6 +1,5 @@
 package com.spring.repository;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -8,6 +7,8 @@ import com.spring.entity.Customer;
 import com.spring.entity.Lead;
 import com.spring.entity.LeadSource;
 import com.spring.entity.LeadStatus;
+import com.spring.entity.MeasurementUnit;
+import com.spring.entity.Project;
 import com.spring.entity.Property;
 import com.spring.entity.PropertyType;
 import com.spring.entity.Region;
@@ -29,8 +30,20 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
     // Find by property type
     List<Lead> findByPropertyType(PropertyType propertyType);
 
+    // Find by measurement unit
+    List<Lead> findByMeasurementUnit(MeasurementUnit measurementUnit);
+
+    // Find by project
+    List<Lead> findByProject(Project project);
+
+    // Find by project id
+    List<Lead> findByProjectProjectId(Long projectId);
+
     // Find by property
     List<Lead> findByProperty(Property property);
+
+    // Find by property id
+    List<Lead> findByPropertyPropertyId(Long propertyId);
 
     // Find by source
     List<Lead> findBySource(LeadSource source);
@@ -56,19 +69,25 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
     // Find active/inactive leads
     List<Lead> findByIsActive(boolean isActive);
 
-    // Find leads assigned to a manager with a specific status
-    List<Lead> findByManagerAndStatus(User manager, LeadStatus status);
+    // Find leads by manager and status
+    List<Lead> findByManagerAndStatus(
+            User manager,
+            LeadStatus status);
 
-    // Find leads assigned to an agent with a specific status
-    List<Lead> findByAgentAndStatus(User agent, LeadStatus status);
-    
-    // Find duplicate property id + lead status
-    Optional<Lead> findByCustomerAndPropertyAndIsActiveTrue(
-            Customer customer,
-            Property property);
-    // Find duplicate by property info (type + region) + lead status
-    Optional<Lead> findByCustomerAndPropertyTypeAndRegionAndIsActiveTrue(
-            Customer customer,
-            PropertyType propertyType,
-            Region region);
+    // Find leads by agent and status
+    List<Lead> findByAgentAndStatus(
+            User agent,
+            LeadStatus status);
+
+    // Find active leads by manager
+    List<Lead> findByManagerUserIdAndIsActiveTrue(Long managerId);
+
+    // Find active leads by agent
+    List<Lead> findByAgentUserIdAndIsActiveTrue(Long agentId);
+
+    // Find active leads by project
+    List<Lead> findByProjectProjectIdAndIsActiveTrue(Long projectId);
+
+    // Find active leads by property
+    List<Lead> findByPropertyPropertyIdAndIsActiveTrue(Long propertyId);
 }

@@ -43,6 +43,17 @@ public class Lead {
 	@Column(name="property_type", nullable=false)
 	private PropertyType propertyType;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name="measurement_unit")
+	private MeasurementUnit measurementUnit;
+	
+	@Column(name="unit_value")
+	private double unitValue;
+	
+	@ManyToOne
+	@JoinColumn(name = "project_id")
+	private Project project;
+	
 	@ManyToOne
 	@JoinColumn(name="property_id")
 	private Property property;	

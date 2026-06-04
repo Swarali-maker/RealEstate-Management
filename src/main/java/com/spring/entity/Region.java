@@ -49,4 +49,7 @@ public class Region {
 	
 	@OneToMany(mappedBy="region")
 	private List<Lead> leads;
+	
+	@OneToMany(mappedBy="region")
+	private List<Project> projects;
 }

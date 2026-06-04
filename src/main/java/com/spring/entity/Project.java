@@ -1,4 +1,5 @@
- package com.spring.entity;
+package com.spring.entity;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,46 +22,50 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="properties")
+@Table(name="leads")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Getter
 @Setter
-public class Property {
+public class Project {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long propertyId;
+	private long projectId;
 	
-	@Column(name="property_name", nullable=false)
-	private String propertyName;
+	@Column(name="project_name", nullable=false)
+	private String projectName;
 	
-	@ManyToOne
-	@JoinColumn(name="project_id", nullable=false)
-	private Project project;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name="measurement_unit")
-	private MeasurementUnit measurementUnit;
-	
-	@Column(name="unit_value")
-	private double unitValue;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name="property_type", nullable=false)
-	private PropertyType propertyType;
+	@Column(name="developer_name")
+	private String developerName;
 	
 	@ManyToOne
-	@JoinColumn(name="region_id")
+	@JoinColumn(name="region_id", nullable=false)
 	private Region region;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="project_type", nullable=false)
+	private ProjectType projectType;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="project_status", nullable=false)
+	private ProjectStatus projectStatus;
 	
 	@Column(name="address", nullable=false)
 	private String address;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(name="status", nullable=false)
-	private AvailabilityStatus status;
+	@Column(name="description", nullable=false)
+	private String description;
+	
+	@Column(name="total_units")
+	private int totalUnits;
+	
+	@Column(name="launch_date")
+	private LocalDate launchDate;
+	
+	@Column(name="expected_completion_date")
+	private LocalDate expectedCompletionDate;
 	
 	@Column(name="is_active", nullable=false)
 	private boolean isActive = true;
@@ -71,6 +76,9 @@ public class Property {
 	@Column(name="updated_at")
 	private LocalDateTime updatedAt;
 	
-	@OneToMany(mappedBy="property")
-	private List<Lead> leads;
+	@OneToMany(mappedBy="project")
+	private List<Property> property;
+	
+	@OneToMany(mappedBy="project")
+	private List<Lead> lead;
 }
