@@ -43,6 +43,7 @@ public class Project {
 	private String developerName;
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="region_id", nullable=false)
 	private Region region;
 	

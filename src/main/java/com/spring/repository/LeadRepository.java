@@ -90,4 +90,16 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
 
     // Find active leads by property
     List<Lead> findByPropertyPropertyIdAndIsActiveTrue(Long propertyId);
+    
+    // Find all unassigned leads
+    List<Lead> findByAgentIsNull();
+    
+    // Find all assigned leads
+    List<Lead> findByAgentIsNotNull();
+
+    // Find assigned leads by region
+    List<Lead> findByRegionRegionIdAndAgentIsNotNull(Long regionId);
+    
+    // Find unassigned leads by region
+    List<Lead> findByRegionRegionIdAndAgentIsNull(Long regionId);
 }

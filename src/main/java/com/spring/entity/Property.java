@@ -39,6 +39,7 @@ public class Property {
 	private String propertyName;
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="project_id", nullable=false)
 	private Project project;
 	
@@ -54,6 +55,7 @@ public class Property {
 	private PropertyType propertyType;
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="region_id")
 	private Region region;
 	

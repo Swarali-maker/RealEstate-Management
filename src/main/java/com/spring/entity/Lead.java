@@ -1,6 +1,8 @@
 package com.spring.entity;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -40,7 +42,7 @@ public class Lead {
 	private Region region;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="property_type", nullable=false)
+	@Column(name="property_type", nullable=true)
 	private PropertyType propertyType;
 	
 	@Enumerated(EnumType.STRING)

@@ -24,6 +24,9 @@ public class LeadController {
 
 	@PostMapping
     public Lead createLead(@RequestBody Lead lead) {
+		System.out.println("Lead received = " + lead);
+	    System.out.println("Customer = " + lead.getCustomer());
+	    System.out.println("Region = " + lead.getRegion());
         return leadService.createLead(lead);
     }
 
@@ -43,6 +46,14 @@ public class LeadController {
             @RequestBody Lead lead) {
 
         return leadService.updateLead(id, lead);
+    }
+    
+    @PutMapping("/{leadId}/assign-to/{agentId}")
+    public Lead assignAgent(
+            @PathVariable Long leadId,
+            @PathVariable Long agentId) {
+
+        return leadService.assignAgent(leadId, agentId);
     }
 
     @DeleteMapping("/{id}")
@@ -73,4 +84,34 @@ public class LeadController {
     @GetMapping("/active")
     public List<Lead> getActiveLeads() {
         return leadService.getActiveLeads();
-    }}
+    }
+    
+    @GetMapping("/region/{regionId}")
+    public List<Lead> getLeadsByRegion(@PathVariable Long regionId){
+    	return leadService.getLeadsByRegion(regionId);
+    }
+    
+    @GetMapping("/region/{regionId}/assigned")
+    public List<Lead> getAssignedLeadsByRegion(
+            @PathVariable Long regionId) {
+
+        return leadService.getAssignedLeadsByRegion(regionId);
+    }
+
+    @GetMapping("/region/{regionId}/unassigned")
+    public List<Lead> getUnassignedLeadsByRegion(
+            @PathVariable Long regionId) {
+
+        return leadService.getUnassignedLeadsByRegion(regionId);
+    }
+    
+    @GetMapping("/assigned")
+    public List<Lead> getAllAssignedLeads() {
+    	return leadService.getAssignedLeads();
+    }
+    
+    @GetMapping("/unassigned")
+    public List<Lead> getAllUnassignedLeads() {
+    	return leadService.getUnassignedLeads();
+    }
+}

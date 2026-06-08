@@ -54,6 +54,7 @@ public class User {
 	
 	// Region id
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="region_id")
 	private Region region;
 	
@@ -67,6 +68,7 @@ public class User {
 	private LocalDateTime updatedAt;
 	
 	@OneToMany(mappedBy = "manager")
+	@JsonIgnore
 	private List<Lead> managedLeads;
 	
 	@JsonIgnore

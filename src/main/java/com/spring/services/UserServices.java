@@ -17,6 +17,20 @@ public class UserServices {
     private UserRepository userRepository;
 
     public User saveUser(User user) {
+    	if(user.getRole() == UserRole.MANAGER) { // Make sure one region has one manager
+
+            Optional<User> existingManager =
+                    userRepository.findByRoleAndRegion(
+                            UserRole.MANAGER,
+                            user.getRegion()
+                    );
+
+            if(existingManager.isPresent()) {
+                throw new RuntimeException(
+                        "This region already has a manager assigned."
+                );
+            }
+        }
     	user.setCreatedAt(LocalDateTime.now());
     	
         return userRepository.save(user);
@@ -57,4 +71,5 @@ public class UserServices {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+    
 }
