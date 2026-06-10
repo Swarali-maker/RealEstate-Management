@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.entity.Region;
 import com.spring.entity.User;
 import com.spring.entity.UserRole;
 import com.spring.repository.UserRepository;
@@ -70,6 +71,26 @@ public class UserServices {
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+    
+    public List<User> getManagers(){
+    	return userRepository.findByRole(UserRole.MANAGER);
+    }
+    
+    public List<User> getAgents(){
+    	return userRepository.findByRole(UserRole.AGENT);
+    }
+    
+    public Optional<User> getManagerByRegion(Region region){
+        return userRepository.findByRoleAndRegion(UserRole.MANAGER, region);
+    }
+    
+    public Optional<User> getAgentsByRegion(Region region){
+    	return userRepository.findByRoleAndRegion(UserRole.AGENT, region);
+    }
+    
+    public List<User> getAdmins(){
+    	return userRepository.findByRole(UserRole.ADMIN);
     }
     
 }

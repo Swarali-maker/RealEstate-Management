@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.entity.Region;
 import com.spring.entity.User;
 import com.spring.entity.UserRole;
+import com.spring.services.RegionServices;
 import com.spring.services.UserServices;
 @CrossOrigin
 @RestController
@@ -23,6 +25,9 @@ import com.spring.services.UserServices;
 public class UserController {
 	@Autowired
     private UserServices userService;
+	
+	@Autowired
+	private RegionServices regionService;
 
     @PostMapping
     public User createUser(@RequestBody User user) {
@@ -67,6 +72,38 @@ public class UserController {
     @GetMapping("/region")
     public List<User> getByRegion(@RequestParam String regionName, @RequestParam UserRole role) {
         return userService.getUsersByRegion(regionName, role);
+    }
+    
+    @GetMapping("/managers")
+    public List<User> getManagers(){
+    	return userService.getManagers();
+    }
+    
+    @GetMapping("/agents")
+    public List<User> getAgents(){
+    	return userService.getAgents();
+    }
+    
+    @GetMapping("/admin")
+    public List<User> getAdmins(){
+    	return userService.getAdmins();
+    }
+    
+    @GetMapping("/managers/region/{regionId}")
+    public Optional<User> getManagersByRegion(@PathVariable Long regionId) {
+
+        Region region = regionService.getById(regionId)
+                .orElseThrow(() -> new RuntimeException("Region not found"));
+
+        return userService.getManagerByRegion(region);
+    }
+    
+    @GetMapping("/agents/region/{regionId}")
+    public Optional<User> getAgentsByRegion(@PathVariable Long regionId){
+    	Region region = regionService.getById(regionId)
+                .orElseThrow(() -> new RuntimeException("Region not found"));
+
+        return userService.getAgentsByRegion(region);
     }
 
     @DeleteMapping("/{id}")

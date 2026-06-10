@@ -41,5 +41,5 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	// Find all active users by role
 	List<User> findByRoleAndIsActiveTrue(UserRole role);
 	// Find by role and region
-	Optional<User> findByRoleAndRegion(UserRole role, Region region);
+	Optional<User> findByRoleAndRegion(UserRole role,Region region);
 }
