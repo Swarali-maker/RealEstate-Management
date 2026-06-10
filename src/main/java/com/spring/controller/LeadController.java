@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.entity.Lead;
+import com.spring.entity.LeadSource;
 import com.spring.entity.LeadStatus;
 import com.spring.services.LeadServices;
 @CrossOrigin
@@ -23,13 +24,39 @@ public class LeadController {
     private LeadServices leadService;
 
 	@PostMapping
-    public Lead createLead(@RequestBody Lead lead) {
-		System.out.println("Lead received = " + lead);
-	    System.out.println("Customer = " + lead.getCustomer());
-	    System.out.println("Region = " + lead.getRegion());
-        return leadService.createLead(lead);
-    }
+	public Lead createLead(@RequestBody Lead lead) {
 
+	    // Generic inquiry
+	    if (lead.getProject() != null &&
+	            lead.getProject().getProjectId() == 0) {
+	        lead.setProject(null);
+	    }
+
+	    if (lead.getProperty() != null &&
+	            lead.getProperty().getPropertyId() == 0) {
+	        lead.setProperty(null);
+	    }
+
+	    // Default values for website inquiries
+	    lead.setSource(LeadSource.WEBSITE);
+	    lead.setStatus(LeadStatus.NEW);
+
+	    //System.out.println("Lead received = " + lead);
+	    //System.out.println("Customer = " + lead.getCustomer());
+	    //System.out.println("Region = " + lead.getRegion());
+
+	    if (lead.getProject() != null) {
+	        System.out.println("Project Id = " +
+	                lead.getProject().getProjectId());
+	    }
+
+	    if (lead.getProperty() != null) {
+	        System.out.println("Property Id = " +
+	                lead.getProperty().getPropertyId());
+	    }
+
+	    return leadService.createLead(lead);
+	}
     @GetMapping
     public List<Lead> getAllLeads() {
         return leadService.getAllLeads();

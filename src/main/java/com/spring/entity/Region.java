@@ -52,8 +52,10 @@ public class Region {
 	private List<Property> properties;
 	
 	@OneToMany(mappedBy="region")
+	@JsonIgnore
 	private List<Lead> leads;
 	
 	@OneToMany(mappedBy="region")
+	@JsonIgnore
 	private List<Project> projects;
 }

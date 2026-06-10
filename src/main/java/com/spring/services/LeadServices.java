@@ -14,6 +14,8 @@ import com.spring.entity.User;
 import com.spring.entity.UserRole;
 import com.spring.repository.CustomerRepository;
 import com.spring.repository.LeadRepository;
+import com.spring.repository.ProjectRepository;
+import com.spring.repository.PropertyRepository;
 import com.spring.repository.RegionRepository;
 import com.spring.repository.UserRepository;
 
@@ -27,36 +29,67 @@ public class LeadServices {
 	private CustomerRepository customerRepository;
 	@Autowired
 	private RegionRepository regionRepository;
+	@Autowired
+	private ProjectRepository projectRepository;
+	@Autowired
+	private PropertyRepository propertyRepository;
 
 
 	public Lead createLead(Lead lead) {
-		lead.setCreatedAt(LocalDateTime.now());
-		Customer customer = customerRepository
-			    .findByCustomerPhone(lead.getCustomer().getCustomerPhone())
-			    .orElseGet(() -> {
-			        Customer c = new Customer();
-			        c.setCustomerName(lead.getCustomer().getCustomerName());
-			        c.setCustomerPhone(lead.getCustomer().getCustomerPhone());
-			        c.setCustomerEmail(lead.getCustomer().getCustomerEmail());
-			        return customerRepository.save(c);
-			    });
-		lead.setCustomer(customer);
-		Region region = regionRepository.findById(lead.getRegion().getRegionId()).orElseThrow();
-		lead.setRegion(region);
-		User manager = userRepository.findByRegionAndRole(
-		        region,
-		        UserRole.MANAGER
-		);
 
-		if (manager == null) {
-		    throw new RuntimeException(
-		            "No manager assigned to region: " + region.getRegionName()
-		    );
-		}
-		lead.setManager(manager);
-        return leadRepository.save(lead);
-    }
+	    System.out.println("Saving lead...");
 
+	    lead.setCreatedAt(LocalDateTime.now());
+
+	    Customer customer = customerRepository
+	            .findByCustomerPhone(lead.getCustomer().getCustomerPhone())
+	            .orElseGet(() -> {
+	                Customer c = new Customer();
+	                c.setCustomerName(lead.getCustomer().getCustomerName());
+	                c.setCustomerPhone(lead.getCustomer().getCustomerPhone());
+	                c.setCustomerEmail(lead.getCustomer().getCustomerEmail());
+	                return customerRepository.save(c);
+	            });
+
+	    lead.setCustomer(customer);
+
+	    Region region = regionRepository
+	            .findById(lead.getRegion().getRegionId())
+	            .orElseThrow();
+
+	    lead.setRegion(region);
+
+	    User manager =
+	            userRepository.findByRegionAndRole(region, UserRole.MANAGER);
+
+	    //System.out.println("Found manager = " + manager);
+
+	    lead.setManager(manager);
+
+	    if (lead.getProject() != null) {
+	        Project project = projectRepository
+	                .findById(lead.getProject().getProjectId())
+	                .orElseThrow();
+
+	        lead.setProject(project);
+	    }
+
+	    if (lead.getProperty() != null) {
+	        Property property = propertyRepository
+	                .findById(lead.getProperty().getPropertyId())
+	                .orElseThrow();
+
+	        lead.setProperty(property);
+	    }
+
+	    //System.out.println("Customer = " + lead.getCustomer());
+	    //System.out.println("Region = " + lead.getRegion());
+	    //System.out.println("Project = " + lead.getProject());
+	    //System.out.println("Property = " + lead.getProperty());
+	    //System.out.println("Manager = " + lead.getManager());
+
+	    return leadRepository.save(lead);
+	}
     public List<Lead> getAllLeads() {
         return leadRepository.findAll();
     }
