@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.spring.entity.Region;
 import com.spring.entity.User;
 import com.spring.entity.UserRole;
+import com.spring.repository.RegionRepository;
 import com.spring.repository.UserRepository;
 
 @Service
@@ -17,8 +18,23 @@ public class UserServices {
 	@Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RegionRepository regionRepository;
+
     public User saveUser(User user) {
-    	if(user.getRole() == UserRole.MANAGER) { // Make sure one region has one manager
+
+        System.out.println("========== USER DATA ==========");
+        System.out.println("Name: " + user.getName());
+        System.out.println("Email: " + user.getEmail());
+        System.out.println("Password: " + user.getPassword());
+        System.out.println("Phone: " + user.getPhone());
+        System.out.println("Role: " + user.getRole());
+        System.out.println("Region: " + user.getRegion());
+        System.out.println("===============================");
+
+        resolveRegion(user);
+
+        if(user.getRole() == UserRole.MANAGER) {
 
             Optional<User> existingManager =
                     userRepository.findByRoleAndRegion(
@@ -32,9 +48,30 @@ public class UserServices {
                 );
             }
         }
-    	user.setCreatedAt(LocalDateTime.now());
-    	
+
+        user.setCreatedAt(LocalDateTime.now());
+
         return userRepository.save(user);
+    }
+
+    public User updateUser(Long id, User user) {
+        User existing = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        resolveRegion(user);
+
+        existing.setName(user.getName());
+        existing.setEmail(user.getEmail());
+        if (user.getPassword() != null && !user.getPassword().isBlank()) {
+            existing.setPassword(user.getPassword());
+        }
+        existing.setPhone(user.getPhone());
+        existing.setRole(user.getRole());
+        existing.setRegion(user.getRegion());
+        existing.setActive(user.isActive());
+        existing.setUpdatedAt(LocalDateTime.now());
+
+        return userRepository.save(existing);
     }
 
     public List<User> getAllUsers() {
@@ -91,6 +128,13 @@ public class UserServices {
     
     public List<User> getAdmins(){
     	return userRepository.findByRole(UserRole.ADMIN);
+    }
+
+    private void resolveRegion(User user) {
+        if (user.getRegion() != null && user.getRegion().getRegionId() != 0) {
+            user.setRegion(regionRepository.findById(user.getRegion().getRegionId())
+                    .orElseThrow(() -> new RuntimeException("Region not found")));
+        }
     }
     
 }

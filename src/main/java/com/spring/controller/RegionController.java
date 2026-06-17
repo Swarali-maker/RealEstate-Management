@@ -18,6 +18,7 @@ import com.spring.services.RegionServices;
 @CrossOrigin
 @RestController
 @RequestMapping("/regions")
+
 public class RegionController {
 	@Autowired
     private RegionServices regionService;

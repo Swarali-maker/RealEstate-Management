@@ -43,4 +43,51 @@ public class Customer {
 	@OneToMany(mappedBy="customer")
 	@JsonIgnore
 	private List<Lead> leads;
+
+	public long getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(long customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public long getCustomerPhone() {
+		return customerPhone;
+	}
+
+	public void setCustomerPhone(long customerPhone) {
+		this.customerPhone = customerPhone;
+	}
+
+	public String getCustomerEmail() {
+		return customerEmail;
+	}
+
+	public void setCustomerEmail(String customerEmail) {
+		this.customerEmail = customerEmail;
+	}
+
+	public List<Lead> getLeads() {
+		return leads;
+	}
+
+	public void setLeads(List<Lead> leads) {
+		this.leads = leads;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerPhone="
+				+ customerPhone + ", customerEmail=" + customerEmail + ", leads=" + leads + "]";
+	}
+	
 }

@@ -24,7 +24,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name="properties")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -78,4 +77,117 @@ public class Property {
 	@OneToMany(mappedBy="property")
 	@JsonIgnore
 	private List<Lead> leads;
+
+	public long getPropertyId() {
+		return propertyId;
+	}
+
+	public void setPropertyId(long propertyId) {
+		this.propertyId = propertyId;
+	}
+
+	public String getPropertyName() {
+		return propertyName;
+	}
+
+	public void setPropertyName(String propertyName) {
+		this.propertyName = propertyName;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public MeasurementUnit getMeasurementUnit() {
+		return measurementUnit;
+	}
+
+	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
+		this.measurementUnit = measurementUnit;
+	}
+
+	public double getUnitValue() {
+		return unitValue;
+	}
+
+	public void setUnitValue(double unitValue) {
+		this.unitValue = unitValue;
+	}
+
+	public PropertyType getPropertyType() {
+		return propertyType;
+	}
+
+	public void setPropertyType(PropertyType propertyType) {
+		this.propertyType = propertyType;
+	}
+
+	public Region getRegion() {
+		return region;
+	}
+
+	public void setRegion(Region region) {
+		this.region = region;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public AvailabilityStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(AvailabilityStatus status) {
+		this.status = status;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public List<Lead> getLeads() {
+		return leads;
+	}
+
+	public void setLeads(List<Lead> leads) {
+		this.leads = leads;
+	}
+
+	@Override
+	public String toString() {
+		return "Property [propertyId=" + propertyId + ", propertyName=" + propertyName + ", project=" + project
+				+ ", measurementUnit=" + measurementUnit + ", unitValue=" + unitValue + ", propertyType=" + propertyType
+				+ ", region=" + region + ", address=" + address + ", status=" + status + ", isActive=" + isActive
+				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", leads=" + leads + "]";
+	}
+	
 }

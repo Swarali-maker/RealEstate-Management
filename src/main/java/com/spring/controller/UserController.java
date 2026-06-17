@@ -13,16 +13,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.spring.entity.Region;
 import com.spring.entity.User;
 import com.spring.entity.UserRole;
+import java.util.HashMap;
+import java.util.Map;
+import com.spring.repository.LeadRepository;
+
+import com.spring.repository.ProjectRepository;
+import com.spring.repository.PropertyRepository;
+import com.spring.repository.RegionRepository;
+import com.spring.repository.UserRepository;
 import com.spring.services.RegionServices;
 import com.spring.services.UserServices;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private LeadRepository leadRepository;
+
+	@Autowired
+	private ProjectRepository projectRepository;
+
+	@Autowired
+	private PropertyRepository propertyRepository;
+
+	@Autowired
+	private RegionRepository regionRepository;
 	@Autowired
     private UserServices userService;
 	
@@ -110,4 +134,40 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id,
+                           @RequestBody User user) {
+        return userService.updateUser(id, user);
+    }
+    @GetMapping("/test")
+    public String test() {
+        return "API Working";
+    }
+    @GetMapping("/dashboard")
+	public Map<String, Object> getDashboard() {
+
+	    Map<String, Object> data = new HashMap<>();
+
+	    data.put("totalUsers", userRepository.count());
+
+	    data.put("totalManagers",
+	            userRepository.countByRole(UserRole.MANAGER));
+
+	    data.put("totalAgents",
+	            userRepository.countByRole(UserRole.AGENT));
+
+	    data.put("totalLeads",
+	            leadRepository.count());
+
+	    data.put("totalProjects",
+	            projectRepository.count());
+
+	    data.put("totalProperties",
+	            propertyRepository.count());
+
+	    data.put("totalRegions",
+	            regionRepository.count());
+
+	    return data;
+	}
 }

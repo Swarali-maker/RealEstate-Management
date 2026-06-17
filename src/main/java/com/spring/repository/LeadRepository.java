@@ -102,4 +102,8 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
     
     // Find unassigned leads by region
     List<Lead> findByRegionRegionIdAndAgentIsNull(Long regionId);
+    
+    long countByStatus(LeadStatus status);
+
+    List<Lead> findTop5ByOrderByCreatedAtDesc();
 }

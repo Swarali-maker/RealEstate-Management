@@ -25,7 +25,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name="projects")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -86,4 +85,143 @@ public class Project {
 	@OneToMany(mappedBy="project")
 	@JsonIgnore
 	private List<Lead> lead;
+
+	public long getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(long projectId) {
+		this.projectId = projectId;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getDeveloperName() {
+		return developerName;
+	}
+
+	public void setDeveloperName(String developerName) {
+		this.developerName = developerName;
+	}
+
+	public Region getRegion() {
+		return region;
+	}
+
+	public void setRegion(Region region) {
+		this.region = region;
+	}
+
+	public ProjectType getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(ProjectType projectType) {
+		this.projectType = projectType;
+	}
+
+	public ProjectStatus getProjectStatus() {
+		return projectStatus;
+	}
+
+	public void setProjectStatus(ProjectStatus projectStatus) {
+		this.projectStatus = projectStatus;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getTotalUnits() {
+		return totalUnits;
+	}
+
+	public void setTotalUnits(int totalUnits) {
+		this.totalUnits = totalUnits;
+	}
+
+	public LocalDate getLaunchDate() {
+		return launchDate;
+	}
+
+	public void setLaunchDate(LocalDate launchDate) {
+		this.launchDate = launchDate;
+	}
+
+	public LocalDate getExpectedCompletionDate() {
+		return expectedCompletionDate;
+	}
+
+	public void setExpectedCompletionDate(LocalDate expectedCompletionDate) {
+		this.expectedCompletionDate = expectedCompletionDate;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public List<Property> getProperty() {
+		return property;
+	}
+
+	public void setProperty(List<Property> property) {
+		this.property = property;
+	}
+
+	public List<Lead> getLead() {
+		return lead;
+	}
+
+	public void setLead(List<Lead> lead) {
+		this.lead = lead;
+	}
+
+	@Override
+	public String toString() {
+		return "Project [projectId=" + projectId + ", projectName=" + projectName + ", developerName=" + developerName
+				+ ", region=" + region + ", projectType=" + projectType + ", projectStatus=" + projectStatus
+				+ ", address=" + address + ", description=" + description + ", totalUnits=" + totalUnits
+				+ ", launchDate=" + launchDate + ", expectedCompletionDate=" + expectedCompletionDate + ", isActive="
+				+ isActive + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", property=" + property
+				+ ", lead=" + lead + "]";
+	}
+	
 }

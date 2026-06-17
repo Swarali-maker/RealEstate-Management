@@ -11,6 +11,7 @@ import com.spring.entity.Region;
 import com.spring.entity.User;
 import com.spring.entity.UserRole;
 
+
 public interface UserRepository extends JpaRepository<User, Long>{
 	// Find by name
 	Optional<User> findByName (String name);
@@ -25,6 +26,8 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	// Find by Role
 	List<User> findByRole (UserRole role);
 	// Find user by region name
+	long countByRole(UserRole role);
+	
 	List<User> findByRegionRegionNameAndRole(String regionName,UserRole role);
 	@Query("""
 		       SELECT u
@@ -42,4 +45,5 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	List<User> findByRoleAndIsActiveTrue(UserRole role);
 	// Find by role and region
 	Optional<User> findByRoleAndRegion(UserRole role,Region region);
+	
 }
